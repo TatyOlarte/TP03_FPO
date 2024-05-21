@@ -3,7 +3,7 @@ class JoyPad {
   private boolean down;
   private boolean left;
   private boolean right;
-
+  /* Metodos Accesores */
   public boolean IsUp() {
     return this.up;
   }

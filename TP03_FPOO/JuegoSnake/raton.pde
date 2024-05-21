@@ -1,4 +1,4 @@
-class Raton extends Animal{
-  public Raton(){
+class Raton extends Animal {
+  public Raton() {
   }
 }

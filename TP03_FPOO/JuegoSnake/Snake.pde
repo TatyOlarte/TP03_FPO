@@ -1,17 +1,18 @@
 class Snake {
-  private PImage snake;
   private PVector posicion;
   private ArrayList<Cuerpo> cuerpo;
   private PVector velocidad;
+  private Cabeza cabeza;
 
   public Snake() {
     posicion = new PVector();
-    velocidad = new PVector(10, 10);
+    velocidad = new PVector();
   }
 
-  public Snake(PVector posicion) {
+  public Snake(PVector posicion, PVector velocidad, Cabeza cabeza) {
     this.posicion = posicion;
-    velocidad = new PVector(10, 10);
+    this.velocidad = velocidad;
+    this.cabeza = cabeza;
   }
 
   void display() {
@@ -19,8 +20,8 @@ class Snake {
   }
 
   public void dibujar() {
-    fill(45,180,25);
-    rect(this.posicion.x, this.posicion.y, 50, 50);
+    imageMode(CENTER);
+    cabeza.visualizarCabeza(posicion, 50, 50);
   }
 
   public void comerAnimal() {
@@ -32,28 +33,47 @@ class Snake {
   public void actualizarTiempo() {
   }
 
-  public void mover(int direccion) {
+  public void mover(int direccion, float deltaTime) {
+    PVector movimiento = PVector.mult(velocidad, deltaTime); 
+    cabeza.setDireccion(direccion);
+
     switch(direccion) {
     case 1: //arriba
-      if (posicion.y - velocidad.y >= 0) {
-        this.posicion.y -= this.velocidad.y;
+      if (posicion.y - movimiento.y >= 20) {
+        this.posicion.y -= movimiento.y;
       }
       break;
     case 2: //abajo
-      if (posicion.y + velocidad.y <= height - 50) {
-        this.posicion.y += this.velocidad.y;
+      if (posicion.y + movimiento.y <= height - 20) {
+        this.posicion.y += movimiento.y;
       }
       break;
     case 3: //izquierda
-      if (posicion.x - velocidad.x >= 0) {
-        this.posicion.x -= this.velocidad.x;
+      if (posicion.x - movimiento.x >= 20) {
+        this.posicion.x -= movimiento.x;
       }
       break;
     case 4: //derecha
-      if (posicion.x + velocidad.x <= width - 50) {
-        this.posicion.x += this.velocidad.x;
+      if (posicion.x + movimiento.x <= width - 20) {
+        this.posicion.x += movimiento.x;
       }
       break;
     }
+  }
+  /* Metodos Accesores */
+  public PVector getPosicion() {
+    return this.posicion;
+  }
+
+  public void setPosicion(PVector posicion) {
+    this.posicion = posicion;
+  }
+
+  public PVector getVelocidad() {
+    return this.velocidad;
+  }
+
+  public void setVelocidad(PVector velocidad) {
+    this.velocidad = velocidad;
   }
 }

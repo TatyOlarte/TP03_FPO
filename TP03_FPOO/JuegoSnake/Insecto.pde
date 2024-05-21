@@ -1,4 +1,4 @@
-class Insecto extends Animal{
-  public Insecto(){
+class Insecto extends Animal {
+  public Insecto() {
   }
 }
