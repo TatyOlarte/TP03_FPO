@@ -1,4 +1,6 @@
 class Pajaro extends Animal {
-  public Pajaro() {
+
+  public Pajaro(PVector posicion) {
+    super(posicion, loadImage("pajaro.png"));
   }
 }

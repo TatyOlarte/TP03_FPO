@@ -1,4 +1,6 @@
 class Insecto extends Animal {
-  public Insecto() {
+
+  public Insecto(PVector posicion) {
+    super(posicion, loadImage("insecto.png"));
   }
 }

@@ -4,15 +4,15 @@ class Cabeza {
   private PImage snakeLeft;
   private PImage snakeRight;
   private PImage imgActual;
-
+/* --- CONSTRUCTORES --- */
   public Cabeza(String pathUp, String pathDown, String pathLeft, String pathRight) {
     snakeUp = loadImage(pathUp);
     snakeDown = loadImage(pathDown);
     snakeLeft = loadImage(pathLeft);
     snakeRight = loadImage(pathRight);
-    imgActual = snakeUp; //Imagen por defecto
+    imgActual = snakeUp;
   }
-
+/* --- METODOS --- */
   public void visualizarCabeza(PVector posicion, int ancho, int alto) {
     image(imgActual, posicion.x, posicion.y, ancho, alto);
   }

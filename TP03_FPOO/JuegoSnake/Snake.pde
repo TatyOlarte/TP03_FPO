@@ -1,9 +1,8 @@
 class Snake {
   private PVector posicion;
-  private ArrayList<Cuerpo> cuerpo;
   private PVector velocidad;
   private Cabeza cabeza;
-
+/* --- CONSTRUCTORES --- */
   public Snake() {
     posicion = new PVector();
     velocidad = new PVector();
@@ -14,7 +13,7 @@ class Snake {
     this.velocidad = velocidad;
     this.cabeza = cabeza;
   }
-
+/* --- METODOS --- */
   void display() {
     dibujar();
   }
@@ -30,37 +29,34 @@ class Snake {
   public void actualizarPuntaje() {
   }
 
-  public void actualizarTiempo() {
-  }
-
   public void mover(int direccion, float deltaTime) {
     PVector movimiento = PVector.mult(velocidad, deltaTime); 
     cabeza.setDireccion(direccion);
 
     switch(direccion) {
-    case 1: //arriba
+    case 1: //---> Arriba
       if (posicion.y - movimiento.y >= 20) {
         this.posicion.y -= movimiento.y;
       }
       break;
-    case 2: //abajo
+    case 2: //---> Abajo
       if (posicion.y + movimiento.y <= height - 20) {
         this.posicion.y += movimiento.y;
       }
       break;
-    case 3: //izquierda
+    case 3: //---> Izquierda
       if (posicion.x - movimiento.x >= 20) {
         this.posicion.x -= movimiento.x;
       }
       break;
-    case 4: //derecha
+    case 4: //---> Derecha
       if (posicion.x + movimiento.x <= width - 20) {
         this.posicion.x += movimiento.x;
       }
       break;
     }
   }
-  /* Metodos Accesores */
+  /* --- METODOS ACCESORES --- */
   public PVector getPosicion() {
     return this.posicion;
   }
