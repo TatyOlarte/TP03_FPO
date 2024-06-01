@@ -2,16 +2,16 @@ class Escenario {
   private float puntaje;
   private int tiempo;
   private int tiempoInicial;
-/* --- CONSTRUCTORES --- */
+  /* --- CONSTRUCTORES --- */
   public Escenario() {
     puntaje = 0;
     tiempoInicial = millis();
   }
-/* --- METODOS --- */
+  /* --- METODOS --- */
   public void display() {
     visualizarEscenario();
   }
-
+  //* Metodo para visualizar el Escenario
   public void visualizarEscenario() {
     snake.display();
     mostrarPuntaje();
@@ -24,7 +24,7 @@ class Escenario {
     textAlign(LEFT);
     text("Puntaje: " + puntaje, 120, 20);
   }
-
+  //* Metodo que establece y visualiza el Tiempo Trascurrido
   public void mostrarTiempo() {
     textSize(20);
     fill(255);

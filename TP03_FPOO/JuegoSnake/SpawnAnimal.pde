@@ -1,6 +1,6 @@
 class SpawnAnimal {
   private ArrayList<Animal> animales; //ArrayList que almacena los animales generados
-/* --- CONSTRUCTORES --- */
+  /* --- CONSTRUCTORES --- */
   public SpawnAnimal() {
     animales = new ArrayList<Animal>();
     generarAnimales();
@@ -30,13 +30,13 @@ class SpawnAnimal {
       return null;
     }
   }
-//* Metodo para Visualizar los Animales
+  //* Metodo para Visualizar los Animales
   public void visualizarAnimales() {
     for (Animal animal : animales) {
       animal.display();//Llama al metodo display de cada animal
     }
   }
-//* Metodo para obtener la Lista de Animales
+  //* Metodo para obtener la Lista de Animales
   public ArrayList<Animal> getAnimales() {
     return animales;
   }

@@ -2,7 +2,7 @@ class Snake {
   private PVector posicion;
   private PVector velocidad;
   private Cabeza cabeza;
-/* --- CONSTRUCTORES --- */
+  /* --- CONSTRUCTORES --- */
   public Snake() {
     posicion = new PVector();
     velocidad = new PVector();
@@ -13,11 +13,11 @@ class Snake {
     this.velocidad = velocidad;
     this.cabeza = cabeza;
   }
-/* --- METODOS --- */
+  /* --- METODOS --- */
   void display() {
     dibujar();
   }
-
+  //* Metodo para dibujar la Cabeza
   public void dibujar() {
     imageMode(CENTER);
     cabeza.visualizarCabeza(posicion, 50, 50);
@@ -28,28 +28,29 @@ class Snake {
 
   public void actualizarPuntaje() {
   }
-
-  public void mover(int direccion, float deltaTime) {
-    PVector movimiento = PVector.mult(velocidad, deltaTime); 
+  //* Metodo para mover al Snake
+  public void mover(int direccion) {
+    //Implementacion DelaTime en el movimiento del Snake
+    PVector movimiento = PVector.mult(velocidad, Time.getDeltaTime(frameRate));
     cabeza.setDireccion(direccion);
 
     switch(direccion) {
-    case 1: //---> Arriba
+    case 1: //ARRIBA
       if (posicion.y - movimiento.y >= 20) {
         this.posicion.y -= movimiento.y;
       }
       break;
-    case 2: //---> Abajo
+    case 2: //ABAJO
       if (posicion.y + movimiento.y <= height - 20) {
         this.posicion.y += movimiento.y;
       }
       break;
-    case 3: //---> Izquierda
+    case 3: //IZQUIERDA
       if (posicion.x - movimiento.x >= 20) {
         this.posicion.x -= movimiento.x;
       }
       break;
-    case 4: //---> Derecha
+    case 4: //DERECHA
       if (posicion.x + movimiento.x <= width - 20) {
         this.posicion.x += movimiento.x;
       }
