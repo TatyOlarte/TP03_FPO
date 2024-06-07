@@ -1,17 +1,22 @@
-class Snake {
+class Snake extends Collider {
   private PVector posicion;
   private PVector velocidad;
   private Cabeza cabeza;
+
   /* --- CONSTRUCTORES --- */
   public Snake() {
     posicion = new PVector();
     velocidad = new PVector();
+    this.ancho = 50;
+    this.alto = 50;
   }
 
   public Snake(PVector posicion, PVector velocidad, Cabeza cabeza) {
     this.posicion = posicion;
     this.velocidad = velocidad;
     this.cabeza = cabeza;
+    this.ancho = 50;
+    this.alto = 50;
   }
   /* --- METODOS --- */
   void display() {
@@ -20,10 +25,20 @@ class Snake {
   //* Metodo para dibujar la Cabeza
   public void dibujar() {
     imageMode(CENTER);
-    cabeza.visualizarCabeza(posicion, 50, 50);
+    cabeza.visualizarCabeza(posicion, ancho, alto);
+    dibujarLimites();
   }
 
-  public void comerAnimal() {
+  public void dibujarLimites() {
+    noFill();
+    rectMode(CENTER);
+    stroke(255, 0, 0);
+    rect(posicion.x, posicion.y, ancho, alto);
+  }
+
+  public boolean verificarColision(Animal animal) {
+    // Llama al método de colisión específico del animal
+    return animal.verificarColision(this);
   }
 
   public void actualizarPuntaje() {

@@ -19,6 +19,16 @@ void draw() {
   snake.display();
   spawn.visualizarAnimales();
   escenario.display();
+/* --- COLISION --- */
+ // Verifica colisión con cada animal en spawn.getAnimales()
+  for (Animal animal : spawn.getAnimales()) {
+    if (snake.verificarColision(animal)) {
+      // Maneja la colisión según sea necesario
+      spawn.getAnimales().remove(animal);
+      spawn.generarAnimales();
+      break;
+    }
+  }
   /* --- JOYPAD --- */
   if (joyPad.IsUp()) {
     snake.mover(1);
