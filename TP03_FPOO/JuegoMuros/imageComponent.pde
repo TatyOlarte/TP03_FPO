@@ -1,4 +1,4 @@
-abstract class ImageComponent {
+class ImageComponent {
   private PImage image;
 
   public ImageComponent(String path) {

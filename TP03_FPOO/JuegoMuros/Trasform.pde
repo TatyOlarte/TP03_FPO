@@ -1,4 +1,4 @@
-abstract class Transform{
+class Transform{
   private PVector posicion;
 
   public Transform(PVector posicion) {
