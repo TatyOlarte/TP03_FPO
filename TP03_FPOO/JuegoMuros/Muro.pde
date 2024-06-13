@@ -1,4 +1,4 @@
-class Muro {
+class Muro extends Collider {
   /* --- ATRIBUTOS --- */
   private Transform transform;
   private ImageComponent imagen;
@@ -6,35 +6,33 @@ class Muro {
   private int puntaje;
 
   /* --- METODOS --- */
-  public Muro(Transform transform/*, ImageComponent imagen*/, int resistencia, int puntaje) {
+  public Muro(Transform transform, ImageComponent imagen, int resistencia, int puntaje) {
+    super(50, 30, transform.posicion);
     this.transform = transform;
-    //this.imagen = imagen;
+    this.imagen = imagen;
     this.resistencia = resistencia;
     this.puntaje = puntaje;
   }
 
   void display() {
-    visualizarMuro();
+    imageMode(CENTER);
+    imagen.displayImage(transform.posicion, 60, 60);
     mostrarResistencia();
+    mostrarLimites();
   }
 
-  void visualizarMuro() {
-    //imagen.displayImage(transform.posicion);
-    noStroke();
-    fill(63, 165, 105);
-    ellipse(transform.posicion.x, transform.posicion.y, 50, 50);
+  void mostrarLimites() {
+    rectMode(CENTER);
+    noFill();
+    stroke(255, 0, 0);
+    rect(transform.posicion.x, transform.posicion.y, getAncho(), getAlto());
   }
 
   void mostrarResistencia() {
     fill(255);
     textSize(12);
     textAlign(CENTER, CENTER);
-    text(resistencia, transform.posicion.x, transform.posicion.y);
-  }
-
-  boolean colision(float bx, float by) {
-    return bx >= transform.posicion.x && bx <= transform.posicion.x + 50/*+ imagen.image.width*/ &&
-      by >= transform.posicion.y && by <= transform.posicion.y + 50/*+ imagen.image.height*/;
+    text(resistencia, transform.posicion.x + 20, transform.posicion.y + 20);
   }
 
   void debilitar(int puntos) {
@@ -44,7 +42,7 @@ class Muro {
   boolean destruido() {
     return resistencia <= 0;
   }
-
+  
   /* --- METODOS ACCESORES --- */
   int getPuntaje() {
     return puntaje;

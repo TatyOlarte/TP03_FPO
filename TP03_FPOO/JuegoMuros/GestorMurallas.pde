@@ -22,7 +22,7 @@ class GestorMurallas {
       Bala bala = balas.get(i);
       for (int j = muros.size() - 1; j >= 0; j--) {
         Muro muro = muros.get(j);
-        if (muro.colision(bala.transform.posicion.x, bala.transform.posicion.y)) {
+        if (muro.colision(bala)) {
           muro.debilitar(10);
           balas.remove(i);
           if (muro.destruido()) {
@@ -33,5 +33,18 @@ class GestorMurallas {
         }
       }
     }
+  }
+
+  boolean colisionMuro(Muro nuevoMuro) {
+    for (Muro muro : muros) {
+      if (nuevoMuro.colision(muro)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public ArrayList<Muro> getMuro() {
+    return muros;
   }
 }

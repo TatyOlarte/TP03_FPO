@@ -1,8 +1,8 @@
 class ImageComponent {
   private PImage image;
 
-  public ImageComponent(String path) {
-    image = loadImage("path");
+  public ImageComponent(PImage image) {
+    this.image = image;
   }
 
   public void displayImage(PVector posicion) {
@@ -11,5 +11,9 @@ class ImageComponent {
 
   public void displayImage(PVector posicion, int ancho, int alto) {
     image(image, posicion.x, posicion.y, ancho, alto);
+  }
+
+  public PImage getImage() {
+    return image;
   }
 }

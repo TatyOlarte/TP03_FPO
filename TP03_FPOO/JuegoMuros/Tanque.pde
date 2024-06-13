@@ -1,4 +1,4 @@
-class Tanque extends Collider {
+class Tanque {
   /* --- ATRIBUTOS --- */
   private Transform transform;
   private ImageComponent imagen;
@@ -24,11 +24,11 @@ class Tanque extends Collider {
 
   void mover(float dx) {
     transform.posicion.x += dx * velocidad.x * Time.getDeltaTime(frameRate);
-    transform.posicion.x = constrain(transform.posicion.x, 0, width - 40); //para que no salga de la pantalla
+    transform.posicion.x = constrain(transform.posicion.x, 20, width - 20); //para que no salga de la pantalla
   }
 
   Bala disparar() {
-    PVector posicionBala = new PVector(transform.posicion.x + 15 /*+ imagen.image.width / 2*/, transform.posicion.y - 10);
+    PVector posicionBala = new PVector(transform.posicion.x /*+ imagen.image.width / 2*/, transform.posicion.y - 10);
     return new Bala(new Transform(posicionBala)/*, new ImageComponent("")*/, new PVector(0, -100));
   }
 }

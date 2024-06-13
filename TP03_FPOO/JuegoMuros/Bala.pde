@@ -1,4 +1,4 @@
-class Bala {
+class Bala extends Collider {
   /* --- ATRIBUTOS --- */
   private Transform transform;
   private ImageComponent imagen;
@@ -6,6 +6,7 @@ class Bala {
 
   /* --- METODOS --- */
   public Bala(Transform transform, /*ImageComponent imagen,*/ PVector velocidad) {
+    super(10, 10, transform.posicion);
     this.transform=transform;
     //this.imagen=imagen;
     this.velocidad=velocidad;
@@ -17,13 +18,21 @@ class Bala {
 
   void display() {
     visualizarBala();
+    mostrarLimite();
   }
 
   void visualizarBala() {
     //imagen.displayImage(transform.posicion);
     noStroke();
     fill(232, 30, 81);
-    rect(transform.posicion.x, transform.posicion.y, 10, 10);
+    rect(transform.posicion.x, transform.posicion.y, getAncho(), getAlto());
+  }
+
+  void mostrarLimite() {
+    rectMode(CENTER);
+    noFill();
+    stroke(0, 255, 0);
+    rect(transform.posicion.x, transform.posicion.y, getAncho(), getAlto());
   }
 
   boolean fuera() {
