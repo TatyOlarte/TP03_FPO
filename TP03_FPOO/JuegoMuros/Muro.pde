@@ -1,13 +1,13 @@
 class Muro extends Collider {
   /* --- ATRIBUTOS --- */
-  private Transform transform;
-  private ImageComponent imagen;
-  private int resistencia;
-  private int puntaje;
+  private Transform transform;//Clase Transform
+  private ImageComponent imagen;//Clase ImageComponent
+  private int resistencia;//Resistencia de cada Muro
+  private int puntaje;//Puntaje de cada Muro
 
   /* --- CONSTRUCTORES --- */
   public Muro(Transform transform, ImageComponent imagen, int resistencia, int puntaje) {
-    super(50, 30, transform.posicion);
+    super(50, 30, transform.posicion);//Hereda de Collider Ancho, Alto y Posicion
     this.transform = transform;
     this.imagen = imagen;
     this.resistencia = resistencia;
@@ -15,18 +15,18 @@ class Muro extends Collider {
   }
 
   /* --- METODOS --- */
-  //Metodo para visualizar el Muro
+  //Metodo para VISUALIZAR el Muro
   void display() {
     imageMode(CENTER);
     imagen.displayImage(transform.posicion, 60, 60);
   }
 
-  //Metodo para quitar bajo 10 puntos la resistencia del Muro
+  //Metodo para debilitar el Muro
   void debilitar(int puntos) {
     resistencia -= puntos;
   }
 
-  //Metodo para destruir el Muro cuando ya no tiene resistencia
+  //Metodo para verificar si el Muro esta DESTRUIDO
   boolean destruido() {
     return resistencia <= 0;
   }

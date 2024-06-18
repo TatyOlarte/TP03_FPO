@@ -1,8 +1,8 @@
 class TipoMuro {
   /* --- ATRIBUTOS --- */
-  private int resistencia;
-  private int puntaje;
-  private PImage imagen;
+  private int resistencia;//Resistencia del muro
+  private int puntaje;//Puntaje del muro
+  private PImage imagen;//Imagen que representa el muro
 
   /* --- CONSTRUCTORES --- */
   public TipoMuro(int resistencia, int puntaje, PImage imagen) {

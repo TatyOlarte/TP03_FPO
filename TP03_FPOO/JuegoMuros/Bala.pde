@@ -12,19 +12,19 @@ class Bala extends Collider {
   }
 
   /* --- METODOS --- */
-  //Metodo para mover la Bala
+  //Metodo para VISUALIZAR la Bala
+  void display() {
+    noStroke();
+    fill(209, 152, 27);
+    rect(transform.posicion.x, transform.posicion.y, getAncho(), getAlto());
+  }
+
+  //Metodo para MOVER la Bala
   void mover() {
     transform.posicion.add(PVector.mult(velocidad, Time.getDeltaTime(frameRate)));//se implemeta el uso de DeltaTime
   }
 
-  //Metodo para visualizar la Bala
-  void display() {
-    noStroke();
-    fill(46, 46, 46);
-    rect(transform.posicion.x, transform.posicion.y, getAncho(), getAlto());
-  }
-
-  //Metodo que permite reestablecer la posicion de la Bala cuando esta sale de la pantalla
+  //Metodo que verifica si la Bala esta feura de la Pantalla
   boolean fuera() {
     return transform.posicion.y < 0;
   }

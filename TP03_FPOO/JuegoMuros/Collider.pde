@@ -1,9 +1,9 @@
 class Collider {
 
   /* --- ATRIBUTOS --- */
-  private int ancho;
-  private int alto;
-  private PVector posicion;
+  private int ancho;//Ancho del Collider
+  private int alto;//Alto del Collider
+  private PVector posicion;//Posicion del Collider
 
   /* --- CONSTRUCTORES --- */
   public Collider(int ancho, int alto, PVector posicion) {
@@ -13,18 +13,19 @@ class Collider {
   }
 
   /* --- METODOS --- */
+  //Metodo pare VERIFICAR COLISIONES
   boolean colision(Collider otro) {
-    //Coordenadas de la Clase con la que Colision
+    //Coordenadas del OTRO COLLIDER
     float otroX = otro.getPosicion().x;
     float otroY = otro.getPosicion().y;
     float otroAncho = otro.getAncho();
     float otroAlto = otro.getAlto();
-    //Coordenadas de la Clase que colisiona
+    //Coordenadas de ESTE COLLIDER
     float colliderX = this.posicion.x;
     float colliderY = this.posicion.y;
     float colliderAncho = this.ancho;
     float colliderAlto = this.alto;
-    //Colisiones
+    //VERIFICACION DE COLISIONES
     boolean colisionX = colliderX < otroX + otroAncho && colliderX + colliderAncho > otroX;
     boolean colisionY = colliderY < otroY + otroAlto && colliderY + colliderAlto > otroY;
 

@@ -5,6 +5,7 @@ private JoyPad joyPad;//JoyPad
 private ArrayList<Bala> balas;//ArrayList de Bala
 private int puntaje;//Puntaje
 private TipoMuro[] tipoMuro;//Array de TipoMuro
+private boolean gameOver = false;//Determina el estado del juego, Juego terminado
 
 /* --- METODOS --- */
 void setup() {
@@ -25,37 +26,54 @@ void setup() {
 }
 
 void draw() {
-  background(0);//Fondo Negro
+  background(50);//Fondo Gris Oscuro
 
-  tanque.display();//Llama al metodo display() de Tanque
-  gestorMurallas.display();//Llama al metodo displa() de GestorMurallas
-  gestorMurallas.verificarColision(balas);//Llama a la colision de GestorMurallas con Balas
+  /* --- Si el Juego NO a Terminado --- */
+  if (!gameOver) {
+    tanque.display();//Mostrar Tanque
+    gestorMurallas.display();//Mostrar Muros
+    gestorMurallas.verificarColision(balas);//Colision entre Balas y Muros
 
-  /* --- Establece el JOYPAD --- */
-  if (joyPad.isLeft()) {//Mueve hacia La IZQUIERDA
-    tanque.mover(-1);
-  }
-  if (joyPad.isRight()) {//Mueve hacia La DERECHA
-    tanque.mover(1);
-  }
-
-  /* --- Establece las BALAS --- */
-  for (int i = balas.size() - 1; i >= 0; i--) {
-    Bala bala = balas.get(i);
-    bala.display();//Llama al metodo display() de Bala
-    bala.mover();//Mueve al metodo mover() de Bala
-    if (bala.fuera()) {//Si la bala esta fuera de la pantalla
-      balas.remove(i);//Se elimina una bala
+    /* --- Establece el JOYPAD --- */
+    if (joyPad.isLeft()) {//Mueve hacia La IZQUIERDA
+      tanque.mover(-1);
     }
-  }
+    if (joyPad.isRight()) {//Mueve hacia La DERECHA
+      tanque.mover(1);
+    }
 
-  fill(255);
-  textSize(20);
-  text("Balas:" + balas.size(), 150, 30);
-  text("Puntaje: " + puntaje, 50, 30);//Muestra el buntaje obtenido durante la partida
+    /* --- Establece las BALAS --- */
+    for (int i = balas.size() - 1; i >= 0; i--) {
+      Bala bala = balas.get(i);
+      bala.display();//Mostrar Bala
+      bala.mover();//Mover Bala
+      if (bala.fuera()) {//Si la bala esta fuera de la pantalla
+        balas.remove(i);//Se elimina una bala
+      }
+    }
+
+    // Si todos los muros han sido destruidos
+    if (gestorMurallas.getMuro().isEmpty()) {
+      gameOver = true;//El juego ha terminado
+    }
+
+    fill(255);
+    textSize(20);
+    text("Puntaje: " + puntaje, 20, 30);//Muestra el puntaje
+    
+  } else {//Si TERMINA el Juego
+
+    background(229, 229, 229);
+    fill(0);
+    textSize(40);
+    textAlign(CENTER);
+    text("Juego Terminado", width / 2, height / 2 - 20);//Muestra un mensaje de JUEGO TERMINADO
+    textSize(20);
+    text("Puntaje Total: " + puntaje, width / 2, height / 2 + 20);//Muestra el Puntaje Final
+  }
 }
 
-/* --- Al PRESIONAR una TECLA --- */
+/* --- Al PRESIONAR una TECLA en el TECLADO --- */
 void keyPressed() {
   if (key=='a'||key=='A'||keyCode==LEFT) {//IZQUIERDA
     joyPad.setLeft(true);
