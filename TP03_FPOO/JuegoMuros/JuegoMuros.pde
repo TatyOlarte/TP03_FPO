@@ -1,100 +1,76 @@
-private Tanque tanque;
-private GestorMurallas gestorMurallas;
-private JoyPad joyPad;
-private ArrayList<Bala> balas;
-private int puntaje;
-private PImage[] obtenerImagen;
-private int[][] tipoMuro = {
-  {(int)random(5, 10), 10, 1},
-  {(int)random(11, 20), 20, 2},
-  {(int)random(21, 31), 30, 3} };
+/* --- ATRIBUTOS --- */
+private Tanque tanque;//Clase Tanque
+private GestorMurallas gestorMurallas;//Clase GestorMurallas
+private JoyPad joyPad;//JoyPad
+private ArrayList<Bala> balas;//ArrayList de Bala
+private int puntaje;//Puntaje
+private TipoMuro[] tipoMuro;//Array de TipoMuro
 
-int numFilas = 5;     // Número de filas de muros
-int numColumnas = 5;  // Número de columnas de muros
-int espacioEntreMuros = 10;  // Espacio entre los muros
-int anchoMuro = 50;   // Ancho del muro
-int altoMuro = 30;    // Alto del muro
+/* --- METODOS --- */
+void setup() {
+  size(500, 500);//Tamaño del Lienzo
+  //Inicializacion de Tanque
+  tanque = new Tanque(new Transform(new PVector(width/2, height - 50)), new ImageComponent(loadImage("tanque.png")), new PVector(100, 100));
+  gestorMurallas = new GestorMurallas();//Inicializacion de GestorMurallas
+  joyPad = new JoyPad();//Inicializacion de JoyPad
+  balas = new ArrayList<Bala>();//Inicializacion del ArrayList de Bala
+  puntaje = 0;//Puntaje Inicial 0
 
-void setup(){
- size(500, 500);
-  tanque = new Tanque(new Transform(new PVector(width/2, height - 50))/*, new ImageComponent("")*/, new PVector(100, 100));
-  gestorMurallas = new GestorMurallas();
-  joyPad = new JoyPad();
-  balas = new ArrayList<Bala>();
-  puntaje = 0;
-  
-  obtenerImagen = new PImage[tipoMuro.length];
-   for (int i = 0; i < tipoMuro.length; i++) {
-   int tipoImagen = tipoMuro[i][2];
-   obtenerImagen[i] = loadImage("muro" + tipoImagen + ".png");
-   }
+  tipoMuro = new TipoMuro[3];// Inicializacion del Array de TipoMuro
+  tipoMuro[0] = new TipoMuro((int)random(5, 10), 10, loadImage("muro1.png"));
+  tipoMuro[1] = new TipoMuro((int)random(11, 20), 20, loadImage("muro2.png"));
+  tipoMuro[2] = new TipoMuro((int)random(21, 31), 30, loadImage("muro3.png"));
 
-   // Calcular el ancho total ocupado por los muros
-   int anchoTotalMuros = numColumnas * anchoMuro + (numColumnas - 1) * espacioEntreMuros;
-   // Calcular el punto de inicio x para centrar los muros
-   int startX = (550 - anchoTotalMuros) / 2;
-   
-   for (int fila = 0; fila < numFilas; fila++) {
-   for (int columna = 0; columna < numColumnas; columna++) {
-   // Calcular posición del muro centrada
-   float x = startX + columna * (anchoMuro + espacioEntreMuros);
-   float y = fila * (altoMuro + espacioEntreMuros) + 100;  // Empieza a partir de y=100
-   
-   // Escoger tipo de muro aleatoriamente del array tipoMuro
-   int indiceTipoMuro = floor(random(tipoMuro.length));
-   int resistencia = tipoMuro[indiceTipoMuro][0];
-   int puntos = tipoMuro[indiceTipoMuro][1];
-   
-   // Crear nuevo muro y agregarlo al gestor de muros
-   gestorMurallas.agregarMuro(new Muro(new Transform(new PVector(x, y)), new ImageComponent(obtenerImagen[indiceTipoMuro]), resistencia, puntos));
-   }
-  }
+  gestorMurallas.generarMuros(tipoMuro, 100, 550);// Generar muros usando el gestor de murallas
 }
 
 void draw() {
-  background(25);
+  background(0);//Fondo Negro
 
-  tanque.display();
-  gestorMurallas.display();
-  gestorMurallas.verificarColision(balas);
+  tanque.display();//Llama al metodo display() de Tanque
+  gestorMurallas.display();//Llama al metodo displa() de GestorMurallas
+  gestorMurallas.verificarColision(balas);//Llama a la colision de GestorMurallas con Balas
 
-  if (joyPad.isLeft()) {
+  /* --- Establece el JOYPAD --- */
+  if (joyPad.isLeft()) {//Mueve hacia La IZQUIERDA
     tanque.mover(-1);
   }
-  if (joyPad.isRight()) {
+  if (joyPad.isRight()) {//Mueve hacia La DERECHA
     tanque.mover(1);
   }
 
-  // Dibujar y mover balas
+  /* --- Establece las BALAS --- */
   for (int i = balas.size() - 1; i >= 0; i--) {
     Bala bala = balas.get(i);
-    bala.display();
-    bala.mover();
-    if (bala.fuera()) {
-      balas.remove(i);
+    bala.display();//Llama al metodo display() de Bala
+    bala.mover();//Mueve al metodo mover() de Bala
+    if (bala.fuera()) {//Si la bala esta fuera de la pantalla
+      balas.remove(i);//Se elimina una bala
     }
   }
 
   fill(255);
   textSize(20);
-  text("Balas:" + balas.size(), 50, 50);
-  text("Puntaje: " + puntaje, 150, 50);
+  text("Balas:" + balas.size(), 150, 30);
+  text("Puntaje: " + puntaje, 50, 30);//Muestra el buntaje obtenido durante la partida
 }
 
+/* --- Al PRESIONAR una TECLA --- */
 void keyPressed() {
-  if (key=='a'||key=='A'||keyCode==LEFT) {
+  if (key=='a'||key=='A'||keyCode==LEFT) {//IZQUIERDA
     joyPad.setLeft(true);
     joyPad.setRight(false);
   }
 
-  if (key=='d'||key=='D'||keyCode==RIGHT) {
+  if (key=='d'||key=='D'||keyCode==RIGHT) {//DERECHA
     joyPad.setLeft(false);
     joyPad.setRight(true);
   }
 }
 
+/* --- AL PRESIONAR una TECLA del MOUSE --- */
 void mousePressed() {
-  if (mouseButton==LEFT) {
+  if (mouseButton==LEFT) {//DISPARA
     balas.add(tanque.disparar());
   }
 }

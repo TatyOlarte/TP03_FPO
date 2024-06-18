@@ -1,7 +1,9 @@
 class JoyPad {
+  /* --- ATRIBUTOS --- */
   private boolean left;
   private boolean right;
 
+  /* --- METODOS ACCESORES --- */
   public void setLeft(boolean state) {
     left = state;
   }

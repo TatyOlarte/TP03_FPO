@@ -1,22 +1,55 @@
 class GestorMurallas {
   /* --- ATRIBUTOS --- */
-  ArrayList<Muro> muros;
+  ArrayList<Muro> muros;//Array que almacena los Muros a generar
+  int numFilas = 5; // Número de filas de Muros
+  int numColumnas = 5; // Número de columnas de Muros
+  int espacioEntreMuros = 10; // Espacio entre los Muros
+  int anchoMuro = 50; // Ancho del muro
+  int altoMuro = 30; // Alto del muro
 
-  /* --- METODOS --- */
+  /* --- CONSTRUCTORES --- */
   public GestorMurallas() {
     muros = new ArrayList<Muro>();
   }
 
+  /* --- METODOS --- */
+  //Metodo para agregar Muros al ArrayList
   void agregarMuro(Muro muro) {
-    muros.add(muro);
+    muros.add(muro);//Adhiere un Muro al ArrayList Muro
   }
 
+  //Metodo para generar los Muros
+  void generarMuros(TipoMuro[] tiposMuro, int margenSuperior, int anchoTotal) {
+    // Calcular el ancho total ocupado por los muros y los espacios entre ellos
+    int anchoTotalMuros = numColumnas * anchoMuro + (numColumnas - 1) * espacioEntreMuros;
+    // Calcular el punto de inicio x para centrar los muros
+    int startX = (anchoTotal - anchoTotalMuros) / 2;
+
+    for (int fila = 0; fila < numFilas; fila++) {
+      for (int columna = 0; columna < numColumnas; columna++) {
+        // Calcular posición del muro centrada
+        float x = startX + columna * (anchoMuro + espacioEntreMuros);
+        float y = fila * (altoMuro + espacioEntreMuros) + margenSuperior;
+
+        // Escoger tipo de muro aleatoriamente del array tiposMuro
+        int indiceTipoMuro = (int) random(tiposMuro.length);
+        int resistencia = tiposMuro[indiceTipoMuro].getResistencia();
+        int puntos = tiposMuro[indiceTipoMuro].getPuntaje();
+
+        // Crear nuevo muro y agregarlo al gestor de murallas
+        agregarMuro(new Muro(new Transform(new PVector(x, y)), new ImageComponent(tiposMuro[indiceTipoMuro].getImagen()), resistencia, puntos));
+      }
+    }
+  }
+
+  //Metodo para visualizar el Muro
   void display() {
     for (Muro muro : muros) {
       muro.display();
     }
   }
 
+  //Metodo que verifica la colision con las Balas
   void verificarColision(ArrayList<Bala> balas) {
     for (int i = balas.size() - 1; i >= 0; i--) {
       Bala bala = balas.get(i);
@@ -35,6 +68,7 @@ class GestorMurallas {
     }
   }
 
+
   boolean colisionMuro(Muro nuevoMuro) {
     for (Muro muro : muros) {
       if (nuevoMuro.colision(muro)) {
@@ -44,7 +78,8 @@ class GestorMurallas {
     return false;
   }
 
-  public ArrayList<Muro> getMuro() {
+  /* --- METODOS ACCESORES --- */
+  public ArrayList<Muro> getMuro() {//Metodo para obetener el ArrayList que almacena Muros
     return muros;
   }
 }
