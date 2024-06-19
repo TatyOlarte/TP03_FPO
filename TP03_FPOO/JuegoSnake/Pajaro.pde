@@ -38,7 +38,7 @@ class Pajaro extends Animal {
   public void dibujarLimites() {
     noFill();
     rectMode(CENTER);
-    stroke(0,255,0);
-    rect(posicion.x, posicion.y, this.ancho, this.alto);
+    stroke(#4FD859);
+    rect(posicion.x, posicion.y, this.ancho-12, this.alto-6);
   }
 }

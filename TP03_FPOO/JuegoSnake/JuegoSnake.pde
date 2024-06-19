@@ -5,30 +5,39 @@ private SpawnAnimal spawn;
 
 void setup() {
   size(600, 600);
-  frameRate(60); // La velocidad de Frames por Segundo
+  frameRate(40); // La velocidad de Frames por Segundo
   escenario = new Escenario();
   Cabeza cabeza = new Cabeza("cabezaUp.png", "cabezaDown.png", "cabezaLeft.png", "cabezaRight.png"); // Inicializacion de la clase Cabeza
-  snake = new Snake(new PVector(width/2, height/2), new PVector(80, 80), cabeza); // inicilizacion de la clase Snake
+  snake = new Snake(new PVector(width/2, height/2), new PVector(80, 80), 0, cabeza); // inicilizacion de la clase Snake
   joyPad = new JoyPad(); // Inicializacion de la clase JoyPad para el movimiento
   spawn = new SpawnAnimal();
 }
 
 void draw() {
-  background(203, 203, 203);
+  background(#4FD859);
   /* --- VISUALIZACIONES --- */
   snake.display();
   spawn.visualizarAnimales();
   escenario.display();
+  
+  // Lista temporal para almacenar los animales colisionados
+  ArrayList<Animal> colisiones = new ArrayList<Animal>();
+  
 /* --- COLISION --- */
- // Verifica colisión con cada animal en spawn.getAnimales()
+  //Detecta las colisiones entre el snake y los animales
   for (Animal animal : spawn.getAnimales()) {
     if (snake.verificarColision(animal)) {
-      // Maneja la colisión según sea necesario
-      spawn.getAnimales().remove(animal);
-      spawn.generarAnimales();
-      break;
+      colisiones.add(animal);
     }
   }
+  
+  //Manejar colisiones
+  for (Animal animal : colisiones) {
+    spawn.getAnimales().remove(animal); // Eliminar el animal de la lista de spawn
+    spawn.generarAnimales(); // Generar nuevos animales
+    snake.crecer(); // Hacer crecer la serpiente
+  }
+
   /* --- JOYPAD --- */
   if (joyPad.IsUp()) {
     snake.mover(1);
